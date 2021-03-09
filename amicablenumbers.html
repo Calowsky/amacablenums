@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>innerhtml demo</title>
+	
+	<style>          
+		header {background-color: Dodgerblue;}
+		body {background-color: grey;}
+		h1 { text-align: center }
+	  
+		.info { text-align: center }
+		
+		img {
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+		}
+  </style>
+
+	<script language="javascript">
+	window.onload =function(){
+		
+        //This is my master function, which takes in values from the form, 
+        //and runs it through my amacable function to see if the two Numbers
+        //are amacable. It also creates a popup of all the factors of the nums.
+		masterfunc = document.getElementById ("btn2");
+		masterfunc.onclick = function() {
+			fnum = parseInt(document.getElementById("fnum").value);
+			lnum = parseInt(document.getElementById("lnum").value);
+
+			document.getElementById("result").innerHTML=amacable(fnum,lnum);
+			
+			var isamacable = amacable(fnum, lnum);
+
+			if(isamacable == true ) {
+                document.getElementById("result").innerHTML= (fnum + " and " + 
+                lnum + " are amacable");
+			}
+			
+			else {
+                document.getElementById("result").innerHTML= (fnum + " and " + 
+                lnum + " are not amacable :(");
+			}
+
+			
+			alert("first numbers factors: " + allfactors(fnum) + 
+            "\n second numbers factors: " + allfactors(lnum) );
+
+		}
+		
+	}
+	//this function checks if the first number is a factor of the second one.
+    function isfactor(factor,num) {    
+        factor=factor*1.0;
+        num = num*1.0;           
+        
+        if( ( (num / factor) % 1 )== 0 ) {
+            return true;
+        }
+         return false;
+    }
+    
+    //this function returns an array of all the factors of a number
+    function allfactors(num) {        
+        var factors = [];    
+        
+        for(var i = 0; i < num ; i++) {
+            if( isfactor(i, num) == true ) {
+                factors.push(i);
+            }
+        }    
+        return factors;
+    }
+    
+    //this returns after adding everything in an array, presumable an array holding 
+    //all of the factors of another number.
+    function factorsum(num) {
+        var factors = allfactors(num);        
+        var sum = 0;
+        
+        for(var i = 0; i < factors.length; i++ ) {
+            sum+= factors[i] ;
+        }        
+        return sum;
+    }
+    
+    //this uses previous functions to check if two nums are amacable.
+    function amacable(fnum, lnum) {
+        var fsum = factorsum(fnum);
+        var lsum = factorsum(lnum);
+
+        if(fnum == lsum && lnum ==fsum) {
+            return true;
+        }
+        
+        return false;
+    }
+	
+	</script>
+    
+</head>
+
+<header>
+  <h1> Amicable Numbers </h1>     
+</header>
+
+<body>
+	
+	<div class="info">
+		
+		<form>
+	 Enter a first number:  <input type="number" id="fnum">
+	 <br>
+	 Enter a second number: <input type="number" id="lnum">
+	 <br>
+	 <input type= "button" value = "Submit" id="btn2" >
+	 <div id = "result">  </div> 
+	 </form>
+	 
+	<div id='here'>&nbsp;</div>
+	
+</body>
+</html>
